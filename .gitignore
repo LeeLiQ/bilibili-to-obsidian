@@ -1,0 +1,6 @@
+config.toml
+cookies*.txt
+_scratch/
+__pycache__/
+*.egg-info/
+.venv/

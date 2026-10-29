@@ -1,0 +1,60 @@
+# 复制为 config.toml 后修改。只写路径和端点，不写密钥（密钥走环境变量）。
+# 主力机是 Mac：登录 B 站、看视频、出面板都在 Mac 上。PC（工作机）不登个人账号。
+
+[vault]
+path = "~/Obsidian/<你的 Mac vault>"
+inbox = "00-收件箱"                  # 新面板
+saved = "20-资料"                    # 出口：存着 / 看片段 / 精读（可在面板里写 topic: 分子目录）
+rejected = "90-弃"                   # 出口：跳过 → 一行记录，面板和附件删除
+rejected_log = "分诊拒绝记录.md"
+attachments = "attachments"          # attachments/分诊-<bvid>/
+attach_prefix = "分诊-"
+worklog = ""                         # vault 内台账；留空就不写
+
+[cache]
+# 默认是 ~/.bili-triage/cache（在 vault 外），30 天自动清理
+# dir = "~/.bili-triage/cache"
+days = 30
+
+[bilibili]
+# 直接读本机浏览器的 B 站登录态：safari / chrome / firefox / edge。
+# Safari 需要先给终端「完全磁盘访问权限」；Chrome 第一次读取时 macOS 会弹钥匙串授权。
+cookies_from_browser = "safari"
+# cookies_file = "~/bili-cookies.txt"   # 也可以用导出的 Netscape 格式 cookies.txt
+max_height = 1080
+
+[asr]
+backend = "auto"     # auto：Apple Silicon 用 mlx，其他平台用 local（faster-whisper）；也可以写 api
+mlx_model = "mlx-community/whisper-large-v3-turbo"
+model = "large-v3-turbo"     # faster-whisper 的模型名
+device = "cpu"               # 有 NVIDIA 显卡改成 cuda
+compute_type = "int8"
+beam_size = 1
+# backend = "api" 时才用到：OpenAI 兼容的 /audio/transcriptions，需要支持段级时间戳
+api_base = "https://api.groq.com/openai/v1"
+api_model = "whisper-large-v3-turbo"
+api_key_env = "GROQ_API_KEY"
+
+[llm]
+# OpenAI 兼容的 chat/completions 接口，模型必须支持图片输入
+base_url = "https://api.openai.com/v1"
+model = ""                      # 填你在用的多模态模型名
+api_key_env = "OPENAI_API_KEY"
+auth_header = "Authorization"   # Azure OpenAI 改成 "api-key"
+json_mode = true
+# temperature = 0.2
+images_per_bucket = 2
+max_images = 24
+timeout = 240
+
+[triage]
+bucket_sec = 120
+
+[favorites]
+# 收藏夹页面 URL 里的 fid=xxxx
+media_ids = []
+max_per_run = 5
+
+[export]
+# bili-triage export 生成的待搬运包放在这里；再由你手动拖到 PC 的 00 Inbox/From Mac/Bilibili/
+dir = "~/bili-to-pc"
